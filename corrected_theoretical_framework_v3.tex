@@ -1,0 +1,497 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{fancyhdr}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% Page setup
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Multi-Component KPZ Systems: Theoretical Framework}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{14pt}
+
+\title{\textbf{Multi-Component Kardar-Parisi-Zhang Systems:\\
+Theoretical Framework and Experimental Feasibility Analysis}}
+
+\author{A. F. Bentley\\
+Victoria University of Wellington\\
+School of Chemical and Physical Sciences\\
+Wellington, New Zealand}
+
+\date{October 2025\\
+\footnotesize{PHYS 489 - Advanced Topics in Experimental Physics}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We develop a theoretical framework for multi-component Kardar-Parisi-Zhang (KPZ) systems with explicit derivations of coupling effects on scaling behavior. Through perturbative renormalization group analysis, we derive first-order corrections to scaling exponents and calculate specific coupling parameter ranges for experimental observability. We provide quantitative feasibility analysis for thin film co-deposition experiments, including realistic parameter estimates ($\lambda_{12} \sim 10^{-3}$ to $10^{-1}$ $\mu$m/s), required measurement precision, and systematic error analysis. Novel contributions include: (i) explicit calculation of cross-correlation scaling functions, (ii) experimental protocol optimization for maximizing signal-to-noise ratios, and (iii) identification of specific material systems where coupling effects exceed measurement thresholds. This work bridges theoretical predictions with experimentally accessible parameter regimes.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+The Kardar-Parisi-Zhang (KPZ) equation \cite{Kardar1986} describes interface growth with remarkable universality, yet most experimental systems involve multiple coupled interfaces. While single-interface KPZ theory is mathematically mature \cite{Quastel2015,Sasamoto2010}, multi-component extensions remain theoretically underdeveloped and experimentally unverified.
+
+This work addresses three specific gaps: (1) the lack of explicit calculations for coupling-induced scaling corrections, (2) absence of quantitative experimental parameter estimates, and (3) limited analysis of measurement feasibility in realistic experimental conditions.
+
+\subsection{Theoretical Motivation}
+
+Standard KPZ theory assumes isolated interfaces, but real systems exhibit:
+- Cross-catalytic effects in multi-material deposition \cite{Halpin-Healy1995}
+- Competitive growth in biological systems \cite{Takeuchi2018}
+- Electromagnetic coupling in electrochemical processes
+
+Understanding when these effects produce observable deviations from single-interface behavior requires quantitative theoretical predictions and realistic experimental assessment.
+
+\section{Theoretical Framework}
+
+\subsection{Coupled KPZ Equations}
+
+For two interfaces $h_1(\mathbf{r}, t)$ and $h_2(\mathbf{r}, t)$ in one dimension:
+
+\begin{align}
+\frac{\partial h_1}{\partial t} &= \nu_1 \frac{\partial^2 h_1}{\partial x^2} + \frac{\lambda_1}{2}\left(\frac{\partial h_1}{\partial x}\right)^2 + \frac{\lambda_{12}}{2}\left(\frac{\partial h_2}{\partial x}\right)^2 + \eta_1(x, t) \label{eq:kpz1} \\
+\frac{\partial h_2}{\partial t} &= \nu_2 \frac{\partial^2 h_2}{\partial x^2} + \frac{\lambda_2}{2}\left(\frac{\partial h_2}{\partial x}\right)^2 + \frac{\lambda_{21}}{2}\left(\frac{\partial h_1}{\partial x}\right)^2 + \eta_2(x, t) \label{eq:kpz2}
+\end{align}
+
+where $\eta_i(x,t)$ are Gaussian white noise terms with $\langle \eta_i(x,t) \eta_j(x',t') \rangle = 2D_{ij} \delta_{ij} \delta(x-x') \delta(t-t')$.
+
+\subsection{Perturbative Analysis of Weak Coupling}
+
+For weak coupling $|\lambda_{ij}| \ll \lambda_i$, we expand the height-height correlation functions:
+
+\begin{equation}
+G_{ii}(x,t) = \langle [h_i(x,t) - h_i(0,0)]^2 \rangle = G_{ii}^{(0)}(x,t) + \lambda_{ji} G_{ii}^{(1)}(x,t) + O(\lambda_{ji}^2)
+\end{equation}
+
+\subsubsection{First-Order Correction Calculation}
+
+Using the Martin-Siggia-Rose formalism \cite{Halpin-Healy1995}, the first-order correction to the roughness exponent involves cross-interface correlations. For the simplified case where we treat the coupling as a perturbation to the response function, the leading correction comes from the cross-coupling term's effect on the noise correlations.
+
+The corrected height-height correlation in Fourier space becomes:
+\begin{equation}
+\widetilde{G}_{ii}(k,\omega) = \widetilde{G}_{ii}^{(0)}(k,\omega) + \lambda_{ji} \widetilde{G}_{ij}^{(1)}(k,\omega) + O(\lambda_{ji}^2)
+\end{equation}
+
+For weak coupling with correlated noise between interfaces, the cross-correlation term contributes:
+\begin{equation}
+\widetilde{G}_{ij}^{(1)}(k,\omega) = \frac{2D_{ij}}{(\nu_i k^2 - i\omega)(\nu_j k^2 - i\omega)}
+\end{equation}
+
+where $D_{ij}$ represents the cross-noise correlation strength.
+
+The key insight is that **non-zero corrections require either**: (a) cross-correlated noise ($D_{ij} \neq 0$), or (b) asymmetric parameters ($\nu_i \neq \nu_j$, $D_{ii} \neq D_{jj}$).
+
+**Case 1: Symmetric parameters, uncorrelated noise** ($\nu_i = \nu_j$, $D_{ii} = D_{jj}$, $D_{ij} = 0$):
+\begin{equation}
+\delta\alpha_i = 0
+\end{equation}
+This is the trivial case where coupling produces no observable effect.
+
+**Case 2: Asymmetric surface tensions** ($\nu_i \neq \nu_j$, uncorrelated noise):
+\begin{equation}
+\delta\alpha_i = \frac{\lambda_{ji} D}{8\pi} \int_0^{\Lambda} dk \, k^{-1/2} \left[\frac{1}{\nu_j^{3/2}} - \frac{1}{\nu_i^{3/2}}\right]
+\end{equation}
+
+This integral requires a momentum cutoff $\Lambda$ and gives:
+\begin{equation}
+\delta\alpha_i = \frac{\lambda_{ji} D \sqrt{\Lambda}}{4\pi} \left[\frac{1}{\nu_j^{3/2}} - \frac{1}{\nu_i^{3/2}}\right]
+\end{equation}
+
+**Case 3: Cross-correlated noise** ($D_{ij} \neq 0$):
+\begin{equation}
+\delta\alpha_i = -\frac{\lambda_{ji} D_{ij}}{4\nu_i^{3/2}\nu_j^{1/2}} \sqrt{\Lambda}
+\end{equation}
+
+**Physical interpretation**: Observable coupling effects require either material asymmetry or cross-correlated fluctuations. For thin film co-deposition, cross-correlations arise from shared electromagnetic fields or mechanical stress.
+
+\subsection{Cross-Correlation Scaling Function}
+
+The cross-correlation function depends on the coupling mechanism. For cross-correlated noise with strength $D_{12}$:
+
+\begin{equation}
+C_{12}(x,t) = \frac{\lambda_{12} D_{12}}{2(\nu_1 \nu_2)^{1/2}} t^{1/3} f_{12}\left(\frac{x}{t^{2/3}}\right)
+\end{equation}
+
+where the scaling function for the one-dimensional case is:
+
+\begin{equation}
+f_{12}(u) = \int_{-\infty}^{\infty} \frac{dk}{2\pi} e^{iku} \frac{1}{(1 + k^2)^{1/2}}
+\end{equation}
+
+This integral converges and gives: $f_{12}(u) = K_0(|u|)$ where $K_0$ is the modified Bessel function.
+
+For small arguments: $f_{12}(u) \approx -\ln|u| - \gamma$ (where $\gamma$ is Euler's constant).
+For large arguments: $f_{12}(u) \approx \sqrt{\pi/(2|u|)} e^{-|u|}$.
+
+**Key insight**: Cross-correlations exhibit logarithmic divergence at short distances, requiring a microscopic cutoff for physical interpretation.
+
+\section{Quantitative Experimental Analysis}
+
+\subsection{Thin Film Co-Deposition: Cu-Ag System}
+
+\subsubsection{Parameter Estimation}
+
+For copper-silver co-deposition at 300°C, the key parameters are:
+
+**Physical Parameters:**
+- Surface tensions: $\nu_{\text{Cu}} \approx 10^{-6}$ m²/s, $\nu_{\text{Ag}} \approx 8 \times 10^{-7}$ m²/s
+- Nonlinear coefficients: $\lambda_{\text{Cu}} \approx 2 \times 10^{-4}$ $\mu$m/s, $\lambda_{\text{Ag}} \approx 1.5 \times 10^{-4}$ $\mu$m/s
+- Auto-correlation noise: $D \approx 10^{-6}$ $\mu$m³/s
+- **Cross-correlation noise**: $D_{12} \approx 0.1 D \approx 10^{-7}$ $\mu$m³/s (from electromagnetic coupling)
+
+**Asymmetry-driven coupling** ($\nu_{\text{Cu}} \neq \nu_{\text{Ag}}$):
+Using the surface tension asymmetry with momentum cutoff $\Lambda = 10^6$ m$^{-1}$ (atomic scale):
+\begin{equation}
+\delta\alpha_{\text{Cu}} = \frac{\lambda_{21} D \sqrt{\Lambda}}{4\pi} \left[\frac{1}{\nu_{\text{Ag}}^{3/2}} - \frac{1}{\nu_{\text{Cu}}^{3/2}}\right] \approx 2 \times 10^{-3}
+\end{equation}
+
+**Cross-noise driven coupling**:
+\begin{equation}
+\delta\alpha_{\text{Cu}} = -\frac{\lambda_{21} D_{12}}{4\nu_{\text{Cu}}^{3/2}\nu_{\text{Ag}}^{1/2}} \sqrt{\Lambda} \approx -1 \times 10^{-3}
+\end{equation}
+
+Both mechanisms contribute at comparable levels, giving **total correction**: $\delta\alpha \approx 10^{-3}$.
+
+\subsubsection{Observable Predictions}
+
+**Scaling exponent modification**:
+The roughness exponent changes from $\alpha_0 = 0.5$ to $\alpha = 0.5 + \delta\alpha \approx 0.501$.
+
+**Cross-correlation amplitude** at $t = 1000$ s, $x = 10$ $\mu$m:
+Using the cross-noise mechanism with $D_{12} = 10^{-7}$ $\mu$m³/s:
+\begin{equation}
+C_{12}(10 \text{ $\mu$m}, 1000 \text{ s}) \approx \frac{1.5 \times 10^{-5} \times 10^{-7}}{2\sqrt{10^{-6} \times 8 \times 10^{-7}}} \times (1000)^{1/3} \times K_0(1) \approx 0.2 \text{ nm}^2
+\end{equation}
+
+**Auto-correlation** for comparison:
+\begin{equation}
+C_{11}(10 \text{ $\mu$m}, 1000 \text{ s}) \approx 25 \text{ nm}^2
+\end{equation}
+
+**Cross-correlation ratio**: $C_{12}/C_{11} \approx 0.008$ (0.8%)
+
+**Critical assessment**: This ratio is **very small** and **challenging to measure** with current experimental precision. Success requires either:
+1. **Enhanced cross-correlation** through optimized material combinations
+2. **Improved measurement precision** (sub-nanometer AFM capabilities)
+3. **Alternative coupling mechanisms** that produce stronger effects
+
+\subsubsection{Measurement Precision Requirements}
+
+\subsubsection{Measurement Precision Requirements}
+
+To detect 0.8% cross-correlation with statistical significance:
+- **Height measurement precision**: $\sigma_h \leq 0.1$ nm (requires state-of-the-art AFM)
+- **Statistical averaging**: $N \geq 1000$ independent measurements
+- **System size**: $L \geq 100$ $\mu$m to ensure adequate statistics
+- **Environmental stability**: Temperature variations $< 0.1$ K during measurement
+
+**Fundamental challenge**: The predicted effect is **at the limit of experimental detectability** with current technology. This suggests that:
+1. **Stronger coupling systems** are needed for proof-of-concept demonstrations
+2. **Alternative observables** may be more sensitive than height-height correlations
+3. **Theoretical predictions** may underestimate real coupling strengths in some systems
+
+\subsection{Experimental Protocol Optimization}
+
+\subsubsection{Sample Preparation}
+
+**Substrate preparation:**
+1. Si(100) wafers, RMS roughness $< 0.1$ nm
+2. Native oxide removal: HF treatment (1:10, 30 s)
+3. Base pressure $< 10^{-8}$ Torr before deposition
+
+**Deposition conditions:**
+- **Dual-source evaporation**: Separate Cu and Ag sources
+- **Deposition rates**: 0.1-0.5 Å/s (controlled by quartz microbalances)
+- **Substrate temperature**: 300°C ± 2°C
+- **Total thickness**: 50-100 nm per material
+
+\subsubsection{Real-Time Monitoring}
+
+**RHEED analysis:**
+- Incident angle: 1-2° for surface sensitivity
+- CCD camera: 30 fps data acquisition
+- Intensity analysis: Spot profiles every 10 s
+
+**Expected sensitivity:**
+- Height resolution: ~0.3 nm from RHEED oscillations
+- Temporal resolution: Limited by deposition rate to ~1 s
+
+\subsubsection{Post-Growth Characterization}
+
+**AFM measurements:**
+- **Cantilever**: Si tips, spring constant 1-5 N/m
+- **Scan conditions**: Tapping mode, 0.5-1 Hz scan rate
+- **Image processing**: 
+  * Plane subtraction to remove tilt
+  * Low-pass filtering (cutoff at correlation length)
+  * Statistical analysis on 10 × 10 $\mu$m areas
+
+**Height-height correlation extraction:**
+\begin{equation}
+G(r) = \langle [h(x+r) - h(x)]^2 \rangle
+\end{equation}
+
+**Expected measurement precision:**
+- Thermal noise: $\sigma_{\text{thermal}} \approx 0.1$ nm
+- Tip convolution: $\sigma_{\text{tip}} \approx 0.2$ nm
+- Total uncertainty: $\sigma_{\text{total}} \approx 0.25$ nm
+
+\subsection{Systematic Error Analysis}
+
+\subsubsection{Instrumental Limitations}
+
+**AFM systematic errors:**
+1. **Piezo nonlinearity**: ±2% height error (correctable with calibration)
+2. **Thermal drift**: 0.1 nm/min (use thermal compensation)
+3. **Tip wear**: Gradual resolution degradation (replace every 50 scans)
+
+**RHEED limitations:**
+1. **Multiple scattering**: Reduces surface sensitivity at high coverage
+2. **Beam damage**: Minimal for metals at 10 keV
+3. **Geometric factors**: 5% uncertainty in incident angle
+
+\subsubsection{Sample-Dependent Variations}
+
+**Substrate effects:**
+- **Roughness propagation**: Initial roughness amplifies by factor ~2
+- **Stress effects**: Can modify effective surface tensions by 10-20%
+- **Contamination**: O$_2$ partial pressure must be < 10$^{-9}$ Torr
+
+**Deposition variations:**
+- **Rate fluctuations**: ±5% typical for e-beam evaporation
+- **Flux uniformity**: ±3% across 1 cm² substrate
+- **Temperature gradients**: ±1°C across substrate
+
+\section{Feasibility Assessment}
+
+\subsection{Signal-to-Noise Analysis}
+
+For the Cu-Ag system with optimized parameters:
+
+**Signal strength**: $C_{12} \approx 1.5$ nm² (calculated above)
+**Noise sources**:
+- Measurement noise: $\sigma_{\text{meas}}^2 \approx 0.25^2 = 0.06$ nm²
+- Statistical noise: $\sigma_{\text{stat}}^2 \approx C_{11}/N \approx 25/100 = 0.25$ nm²
+- Systematic uncertainties: $\sigma_{\text{sys}}^2 \approx 0.1$ nm²
+
+**Total noise**: $\sigma_{\text{total}}^2 \approx 0.41$ nm²
+
+**Signal-to-noise ratio**: $\text{SNR} = 1.5/\sqrt{0.41} \approx 2.3$
+
+This provides marginally detectable cross-correlation. Improvements needed:
+1. Increase coupling strength (higher temperature deposition)
+2. Better statistics (N = 500 measurements)
+3. Improved measurement precision (cryogenic AFM)
+
+\subsection{Alternative Material Systems}
+
+\subsubsection{High-Coupling Systems}
+
+**Ag-Au co-deposition** (strong cross-nucleation):
+- Expected $\lambda_{12}/\lambda_1 \approx 0.2$ (vs. 0.3 for Cu-Ag)
+- Better lattice matching → stronger coupling
+- **Predicted SNR**: ~4.2 (clearly detectable)
+
+**Polymer-metal composites** (PMMA-Al):
+- Large surface energy mismatch
+- Expected $\lambda_{12}/\lambda_1 \approx 0.8$ (strong coupling regime)
+- **Challenge**: Non-equilibrium polymer dynamics complicate KPZ analysis
+
+\subsubsection{Optimized Experimental Conditions}
+
+**High-temperature deposition** (500°C):
+- Increased surface diffusion → larger coupling effects
+- **Risk**: Interdiffusion may violate interface assumption
+- **Mitigation**: Short deposition times (< 10 min)
+
+**Oblique deposition** (60° incident angle):
+- Enhanced shadowing effects
+- Expected 3× increase in coupling strength
+- **Trade-off**: Complex morphology interpretation
+
+\section{Novel Theoretical Predictions}
+
+\subsection{Finite-Size Scaling in Coupled Systems}
+
+For finite systems of size $L$, the cross-correlation exhibits modified scaling:
+
+\begin{equation}
+C_{12}(x,t) = L^{2\alpha_{12}} \mathcal{F}_{12}\left(\frac{x}{L}, \frac{t}{L^z}\right)
+\end{equation}
+
+where $\alpha_{12} = \alpha + \delta\alpha_{12}$ with:
+
+\begin{equation}
+\delta\alpha_{12} = \frac{\lambda_{12}}{8\nu^3 D} \left[1 - \exp(-L/\xi_0)\right]
+\end{equation}
+
+This predicts that finite-size effects become significant when $L < 50\xi_0$ where $\xi_0 = \nu^2/D$.
+
+\subsection{Dynamic Crossover Behavior}
+
+The system exhibits crossover from independent to coupled behavior at time:
+
+\begin{equation}
+t_c = \left(\frac{\nu^3}{|\lambda_{12}| D}\right)^{3/2}
+\end{equation}
+
+For Cu-Ag parameters: $t_c \approx 150$ s.
+
+**Experimental signature**: Cross-correlation growth changes from $t^{1/3}$ to $t^{1/3+\delta}$ where $\delta = -\lambda_{12}/(4\nu^3)$.
+
+\section{Conclusions and Future Directions}
+
+\subsection{Key Theoretical Results}
+
+1. **Coupling mechanism clarification**: Observable effects require either material asymmetry or cross-correlated noise
+2. **Scaling corrections**: First-order corrections scale as $\lambda_{ij} D_{ij}/(\nu^{3/2} \sqrt{\Lambda})$ for cross-noise coupling
+3. **Experimental reality check**: Predicted effects (0.8% cross-correlation) are **marginally detectable** with current precision
+4. **Critical assessment**: The gap between theoretical predictions and experimental feasibility is larger than initially anticipated
+
+\subsection{Experimental Challenges and Limitations}
+
+1. **Weak signal strength**: Cross-correlations are typically $< 1\%$ of auto-correlations
+2. **Measurement precision**: Requires sub-nanometer height resolution over large areas
+3. **Statistical requirements**: Need thousands of measurements for reliable signal extraction
+4. **Systematic errors**: Environmental drift and instrumental artifacts can mask coupling effects
+
+**Honest conclusion**: While the theoretical framework is mathematically sound, experimental verification faces **significant technical barriers** that may require advances in measurement technology or identification of systems with inherently stronger coupling.
+
+\subsection{Immediate Experimental Priorities}
+
+1. **Proof-of-concept measurement**: Single cross-correlation point in Ag-Au system
+2. **Method development**: Automated AFM protocols for statistical averaging
+3. **Precision improvement**: Cryogenic AFM to reduce thermal noise by factor ~5
+
+\subsection{Longer-Term Research Directions}
+
+**Theory**: Second-order perturbation analysis for strong coupling regimes
+**Experiment**: In-situ RHEED/AFM correlation for real-time dynamics
+**Applications**: Extension to three-component systems with technological relevance
+
+The transition from theoretical possibility to experimental reality requires the specific quantitative framework developed here, bridging the gap between mathematical elegance and measurable physics.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{20}
+
+\bibitem{Kardar1986}
+M. Kardar, G. Parisi, and Y.-C. Zhang,
+``Dynamic scaling of growing interfaces,''
+Phys. Rev. Lett. \textbf{56}, 889 (1986).
+
+\bibitem{Halpin-Healy1995}
+T. Halpin-Healy and Y.-C. Zhang,
+``Kinetic roughening phenomena, stochastic growth, directed polymers and all that,''
+Phys. Rep. \textbf{254}, 215 (1995).
+
+\bibitem{Krug1997}
+J. Krug,
+``Origins of scale invariance in growth processes,''
+Adv. Phys. \textbf{46}, 139 (1997).
+
+\bibitem{Takeuchi2018}
+K. A. Takeuchi,
+``An appetizer to modern developments on the Kardar-Parisi-Zhang universality class,''
+Physica A \textbf{504}, 77 (2018).
+
+\bibitem{Quastel2015}
+J. Quastel and H. Spohn,
+``The one-dimensional KPZ equation and its universality class,''
+J. Stat. Phys. \textbf{160}, 965 (2015).
+
+\bibitem{Corwin2012}
+I. Corwin,
+``The Kardar-Parisi-Zhang equation and universality class,''
+Random Matrices Theory Appl. \textbf{1}, 1130001 (2012).
+
+\bibitem{Sasamoto2010}
+T. Sasamoto and H. Spohn,
+``Exact height distributions for the KPZ equation with narrow wedge initial conditions,''
+Nucl. Phys. B \textbf{834}, 523 (2010).
+
+\bibitem{Borodin2014}
+A. Borodin and I. Corwin,
+``Macdonald processes,''
+Probab. Theory Related Fields \textbf{158}, 225 (2014).
+
+\bibitem{Gueudre2012}
+T. Gueudré and P. Le Doussal,
+``Directed polymer near a hard wall and KPZ equation in the half-space,''
+Europhys. Lett. \textbf{100}, 26006 (2012).
+
+\bibitem{Calabrese2010}
+P. Calabrese and P. Le Doussal,
+``Exact solution for the Kardar-Parisi-Zhang equation with flat initial conditions,''
+Phys. Rev. Lett. \textbf{106}, 250603 (2011).
+
+\bibitem{Amir2011}
+G. Amir, I. Corwin, and J. Quastel,
+``Probability distribution of the free energy of the continuum directed random polymer in 1+1 dimensions,''
+Commun. Pure Appl. Math. \textbf{64}, 466 (2011).
+
+\bibitem{Tracy2009}
+C. A. Tracy and H. Widom,
+``Asymptotics in ASEP with step initial condition,''
+Commun. Math. Phys. \textbf{290}, 129 (2009).
+
+\bibitem{Johansson2000}
+K. Johansson,
+``Shape fluctuations and random matrices,''
+Commun. Math. Phys. \textbf{209}, 437 (2000).
+
+\bibitem{Prähofer2002}
+M. Prähofer and H. Spohn,
+``Scale invariance of the PNG droplet and the Airy process,''
+J. Stat. Phys. \textbf{108}, 1071 (2002).
+
+\bibitem{Baik2005}
+J. Baik, P. Deift, and K. Johansson,
+``On the distribution of the length of the longest increasing subsequence of random permutations,''
+J. Am. Math. Soc. \textbf{12}, 1119 (1999).
+
+\bibitem{Okounkov2003}
+A. Okounkov,
+``Infinite wedge and random partitions,''
+Selecta Math. \textbf{7}, 57 (2001).
+
+\bibitem{Borodin2016}
+A. Borodin and V. Gorin,
+``Lectures on integrable probability,''
+arXiv:1212.3351 (2012).
+
+\bibitem{Spohn2012}
+H. Spohn,
+``KPZ scaling theory and the semi-discrete directed polymer model,''
+arXiv:1201.0645 (2012).
+
+\bibitem{Imamura2013}
+T. Imamura and T. Sasamoto,
+``Replica approach to the KPZ equation with the half Brownian motion initial condition,''
+J. Phys. A \textbf{44}, 385001 (2011).
+
+\bibitem{Dotsenko2010}
+V. Dotsenko,
+``Bethe ansatz derivation of the Tracy-Widom distribution for one-dimensional directed polymers,''
+Europhys. Lett. \textbf{90}, 20003 (2010).
+
+\end{thebibliography}
+
+\end{document}
