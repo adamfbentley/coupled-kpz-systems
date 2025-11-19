@@ -8,13 +8,13 @@ A computational investigation of coupled surface growth systems using modified K
 
 ## Overview
 
-The Kardar-Parisi-Zhang equation describes the growth of rough interfaces in systems ranging from bacterial colonies to flame fronts. While single-interface KPZ dynamics are well understood, multi-component systems with cross-coupling interactions remain an active area of research.
+The Kardar-Parisi-Zhang equation describes the growth of rough interfaces in systems ranging from bacterial colonies to flame fronts. While single-interface KPZ dynamics are well understood, multi-component systems with cross-coupling interactions are less explored.
 
-This project implements numerical simulations to investigate:
-- How coupling strength affects interface synchronization
-- Whether cross-coupling terms modify KPZ universality class
-- The relationship between coupling symmetry and interface correlations
-- Scaling behavior in coupled growth systems
+This project implements numerical simulations to explore:
+- How coupling strength affects interface correlations
+- The relationship between coupling symmetry and interface behavior
+- Scaling properties in coupled growth systems
+- Methods for analyzing multi-interface stochastic systems
 
 ## Mathematical Framework
 
@@ -32,10 +32,10 @@ Where:
 - $h_i(x,t)$ are the interface heights
 - $\nu_i$ are surface tension coefficients
 - $\lambda_i$ are self-interaction KPZ nonlinearities  
-- $\lambda_{ij}$ are **cross-coupling terms** (key focus of investigation)
+- $\lambda_{ij}$ are **cross-coupling terms** (focus of this study)
 - $\eta_i(x,t)$ are Gaussian white noise terms
 
-The cross-coupling terms $\lambda_{12}|\nabla h_2|^2$ and $\lambda_{21}|\nabla h_1|^2$ represent the novel physics: one interface's local slope affects the growth rate of the other interface.
+The cross-coupling terms $\lambda_{12}|\nabla h_2|^2$ and $\lambda_{21}|\nabla h_1|^2$ allow one interface's local slope to influence the growth rate of the other interface, creating a coupled system.
 
 ## Key Features
 
@@ -154,7 +154,7 @@ Simulations demonstrate that coupling symmetry affects interface correlations:
 | **Antisymmetric** | λ₁₂ = +0.5, λ₂₁ = -0.5 | ⟨C₁₂⟩ = -0.014 ± 0.018 | Weak negative correlation |
 | **Asymmetric** | λ₁₂ = 0.8, λ₂₁ = 0.2 | ⟨C₁₂⟩ ≈ +0.005 | Near-independent behavior |
 
-**Key finding**: Even weak coupling (|λ| ≤ 0.5) produces measurable correlation signatures that depend on coupling symmetry. Stronger coupling regimes may produce more pronounced synchronization effects.
+**Observation**: The weak coupling (|λ| ≤ 0.5) explored here produces small correlation values consistent with noise-dominated dynamics. The correlation trends align with coupling symmetry, though the effects are subtle. Stronger coupling strengths would be needed to observe more significant synchronization.
 
 ### Scaling Behavior
 
@@ -169,20 +169,21 @@ Measured growth exponents depend on simulation regime:
 
 **Standard KPZ**: β = 1/3 ≈ 0.333 (growth regime)
 
-**Interpretation**: The small measured exponents (β ≈ 0.05) indicate the simulations operated primarily in the **saturated regime** where interface width has plateaued. These values represent fluctuations around a steady state rather than power-law growth. The statistical deviations from KPZ scaling (90+ sigma) confirm saturation dynamics rather than novel universality classes.
+**Interpretation**: The small measured exponents (β ≈ 0.05) indicate the simulations operated primarily in the **saturated regime** where interface width has plateaued. These values represent fluctuations around a steady state rather than power-law growth. This is typical behavior for finite systems at late times.
 
-**To observe true growth scaling**: Larger system sizes (L > 512), longer evolution times, and stronger coupling (|λ| > 1.0) would be needed to access the regime where coupling might modify KPZ exponents.
+**Note on growth regime**: Observing power-law growth (β ≈ 1/3) would require larger system sizes (L > 512), shorter time windows focused on early evolution, and careful finite-size scaling analysis. Whether coupling modifies KPZ exponents remains an open question that would require more extensive parameter studies.
 
 ### Current Limitations
 
 This is an exploratory undergraduate research project with several acknowledged limitations:
 
 1. **Limited parameter space**: Coupling strengths explored are relatively weak (|λ₁₂|, |λ₂₁| ≤ 1)
-2. **Finite-size effects**: System sizes (L ≤ 512) may introduce finite-size scaling artifacts
-3. **Short evolution times**: Some simulations reach saturation before full growth regime is captured
+2. **Finite-size effects**: System sizes (L ≤ 512) introduce finite-size scaling constraints
+3. **Saturated regime dominance**: Most simulations reach saturation before capturing extended growth dynamics
 4. **Statistical ensemble**: Limited ensemble averaging compared to publication-standard studies
+5. **No strong coupling**: The weak coupling regime studied may not reveal significant deviations from independent KPZ behavior
 
-Future work would benefit from larger system sizes, longer evolution times, and stronger coupling regimes to observe potential novel universality classes.
+Future work would benefit from larger system sizes, systematic finite-size scaling analysis, and exploration of stronger coupling regimes to better characterize coupled interface dynamics.
 
 ## Physical Relevance
 
